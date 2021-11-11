@@ -6,7 +6,7 @@ RSpec.describe Shift do
   before(:each) do
     @shift = Shift.new
     @example_key1 = '01234'
-    @example_date1 = 111589
+    @example_date1 = '111589'
   end
 
   it 'exists' do
@@ -35,11 +35,12 @@ RSpec.describe Shift do
   end
 
   it '#slice_date' do
-    date_digits = "4921"
-    expect(@shift.slice_date(date_digits)).to eq({:A => 4, :B => 9, :C => 2, :D => 1})
+    @shift.date_last_four(@example_date1)
+    expect(@shift.slice_date).to eq({:A => 4, :B => 9, :C => 2, :D => 1})
   end
 
   it '#generate_offsets' do
-    expect(@shift.generate_offsets).to eq({:A => 5, :B => 21, :C => 25, :D => 35})
+    @shift.date_last_four(@example_date1)
+    expect(@shift.generate_offsets(@example_key1, @shift.date_digits)).to eq({:A => 5, :B => 21, :C => 25, :D => 35})
   end
 end

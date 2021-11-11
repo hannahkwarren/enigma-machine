@@ -38,7 +38,8 @@ class Shift
   end
 
   def square_date(date)
-    square = date ** 2
+    int = date.to_i
+    square = int ** 2
     square.to_s
   end
 
@@ -46,17 +47,18 @@ class Shift
     @date_digits = square_date(date)[-4..-1]
   end
 
-  def slice_date(date_digits)
+  def slice_date
     date_hash_keys = [:A, :B, :C, :D]
     sliced_date = Hash.new
 
     date_hash_keys.each do |symbol|
-      sliced_date[symbol] = date_digits.slice!(0).to_i
+      sliced_date[symbol] = date_digits.slice!(0)
     end
-    sliced_date
+    sliced_date.map {|k, v| [k, v.to_i]}.to_h
   end
 
-  def generate_offsets
-    
+  def generate_offsets(key, date_digits)
+    new = slice_key(key).merge!(slice_date){ |key, key_slice, date_slice| key_slice + date_slice}
+    new
   end
 end
