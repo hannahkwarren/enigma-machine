@@ -2,11 +2,12 @@ require 'securerandom'
 
 class Shift
 
-  attr_reader :character_set, :key, :offset
+  attr_reader :character_set, :key, :date_digits, :offset
 
   def initialize
     @character_set = character_set
     @key = key
+    @date_digits = date_digits
     @offset = offset
   end
 
@@ -23,17 +24,17 @@ class Shift
   end
 
   def slice_key(key)
-    keys_for_hash = [:A, :B, :C, :D]
-    sliced = Hash.new
+    key_hash_keys = [:A, :B, :C, :D]
+    sliced_key = Hash.new
 
-    keys_for_hash.each do |symbol|
-      #take a 2-character slice of key
-      sliced[symbol] = key.slice!(0..1)
-      #then put back the second character so it can be included as first
-      # character for the next hash value
-      key.prepend(sliced[symbol][1])
+    key_hash_keys.each do |symbol|
+      #slice off and return the first 2 characters of key
+      sliced_key[symbol] = key.slice!(0..1)
+      #then put back the second character at the beginning of leftover
+      #  chars, so it can be included as first character for the next slice
+      key.prepend(sliced_key[symbol][1])
     end
-    sliced
+    sliced_key.map {|k, v| [k, v.to_i]}.to_h
   end
 
   def square_date(date)
@@ -42,9 +43,20 @@ class Shift
   end
 
   def date_last_four(date)
-    square_date(date)[-4..-1].to_i
+    @date_digits = square_date(date)[-4..-1]
   end
 
+  def slice_date(date_digits)
+    date_hash_keys = [:A, :B, :C, :D]
+    sliced_date = Hash.new
 
+    date_hash_keys.each do |symbol|
+      sliced_date[symbol] = date_digits.slice!(0).to_i
+    end
+    sliced_date
+  end
 
+  def generate_offsets
+    
+  end
 end

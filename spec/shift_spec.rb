@@ -5,8 +5,8 @@ RSpec.describe Shift do
 
   before(:each) do
     @shift = Shift.new
-    @stub_key = '01234'
-    @stub_date = 111589
+    @example_key1 = '01234'
+    @example_date1 = 111589
   end
 
   it 'exists' do
@@ -18,19 +18,25 @@ RSpec.describe Shift do
   end
 
   it '#generate_random_number' do
-    allow(@shift.generate_random_number).to receive(:digits).and_return(@stub_key)
+    allow(@shift.generate_random_number).to receive(:digits).and_return(@example_key1)
   end
 
   it '#slice_key' do
-    expect(@shift.slice_key(@stub_key)).to eq({:A => "01", :B => "12", :C => "23", :D => "34"})
+    expect(@shift.slice_key(@example_key1)).to eq({:A => 01, :B => 12, :C => 23, :D => 34})
   end
 
   it '#square_date' do
-    expect(@shift.square_date(@stub_date)).to eq("12452104921")
+    expect(@shift.square_date(@example_date1)).to eq("12452104921")
   end
 
   it '#date_last_four' do
-    expect(@shift.date_last_four(@stub_date)).to eq(4921)
+    @shift.date_last_four(@example_date1)
+    expect(@shift.date_digits).to eq("4921")
+  end
+
+  it '#slice_date' do
+    date_digits = "4921"
+    expect(@shift.slice_date(date_digits)).to eq({:A => 4, :B => 9, :C => 2, :D => 1})
   end
 
   it '#generate_offsets' do
