@@ -26,10 +26,10 @@ RSpec.describe Shift do
   end
 
   it '#square_date' do
-    expect(@shift.square_date(@stub_date)).to eq(12452104921)
+    expect(@shift.square_date(@stub_date)).to eq("12452104921")
   end
 
   it '#date_last_four' do
-    expect(@shift.last_four(@stub_date)).to eq(4921)
+    expect(@shift.date_last_four(@stub_date)).to eq(4921)
   end
 end

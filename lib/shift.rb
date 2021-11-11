@@ -2,11 +2,12 @@ require 'securerandom'
 
 class Shift
 
-  attr_reader :character_set, :key
+  attr_reader :character_set, :key, :offset
 
   def initialize
     @character_set = character_set
     @key = key
+    @offset = offset
   end
 
   def create_character_set
@@ -36,7 +37,12 @@ class Shift
   end
 
   def square_date(date)
-    date ** 2
+    square = date ** 2
+    square.to_s
+  end
+
+  def date_last_four(date)
+    square_date(date)[-4..-1].to_i
   end
 
 
