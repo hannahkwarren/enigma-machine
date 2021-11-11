@@ -32,4 +32,8 @@ RSpec.describe Shift do
   it '#date_last_four' do
     expect(@shift.date_last_four(@stub_date)).to eq(4921)
   end
+
+  it '#generate_offsets' do
+    expect(@shift.generate_offsets).to eq({:A => 5, :B => 21, :C => 25, :D => 35})
+  end
 end
