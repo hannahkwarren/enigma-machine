@@ -2,23 +2,21 @@ require_relative './shift'
 
 module Encryptable
 
-  def generate_key
-    @key = shift.generate_random_number
+  def generate_key(current_shift)
+    @key = current_shift.generate_random_number
   end
 
-  def last_four
-    @four_digits = shift.date_last_four
+  def date_last_four(current_shift, date)
+    @four_digits = current_shift.date_last_four(date)
   end
 
-  def offsets
-    shift.generate_offsets(key, four_digits)
+  def generate_offsets(current_shift)
+    @offsets = current_shift.generate_offsets(key, four_digits)
   end
 
-  def message_check(message)
+  def downcase_message(message)
+    @prepped_message = message.downcase
+  end
 
-
-
-
-
-
+  
 end
