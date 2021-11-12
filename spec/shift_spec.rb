@@ -17,8 +17,10 @@ RSpec.describe Shift do
     expect(@shift.create_character_set).to eq(["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", " "])
   end
 
-  it '#generate_random_number' do
-    allow(@shift.generate_random_number).to receive(:digits).and_return(@example_key1)
+  it 'generates a random number' do
+    allow(SecureRandom).to receive(:random_number).with(10**5).and_return('01234'
+    )
+    expect(@shift.generate_random_number).to eq(@example_key1)
   end
 
   it '#slice_key' do
