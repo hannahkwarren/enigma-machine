@@ -36,7 +36,7 @@ class Enigma
 
   def encrypt(message, provided_key = nil, provided_date = nil)
 
-    if provided_key.length == 6
+    if provided_key.class == String && provided_key.length == 6
       provided_date = provided_key
       provided_key = nil
     end
@@ -50,9 +50,9 @@ class Enigma
       self.accept_key(provided_key)
     end
 
-    # if date = nil
-    #   self.use_today_date
-    # end
+    if provided_date == nil
+      provided_date = @current_shift.use_today_date
+    end
 
     self.date_last_four(provided_date)
     self.generate_offsets

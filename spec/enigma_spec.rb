@@ -67,32 +67,23 @@ RSpec.describe Enigma do
       })
   end
 
-  xit "Encryptable#encrypt with no date specified" do
-    allow(SecureRandom).to receive(:random_number).with(10**5).and_return('02715'
-    )
-    @enigma_1.generate_key(@shift_1)
-    @enigma_1.date_last_four(@shift_1, @date_1)
-    @enigma_1.generate_offsets(@shift_1)
-    @enigma_1.downcase_message(@message_1)
-    expect(@enigma_1.encrypt(@message_1, @key_1, @date_1)).to eq({
-      encryption: "keder ohulw!",
+  it "Encryptable#encrypt with no date specified" do
+    allow(Date).to receive(:today).and_return(Date.new(2021,11,15))
+    expect(@enigma_1.encrypt(@message_1, @key_1)).to eq({
+      encryption: "mifatdqdwpy!",
       key: "02715",
-      date: "040895"
+      date: "111521"
       })
   end
 
-  xit "Encryptable#encrypt with no key or date specified" do
+  it "Encryptable#encrypt with no key or date specified" do
     allow(SecureRandom).to receive(:random_number).with(10**5).and_return('02715'
     )
-    # @enigma_1.create_character_set(@shift_1)
-    @enigma_1.generate_key(@shift_1)
-    @enigma_1.date_last_four(@shift_1, @date_1)
-    @enigma_1.generate_offsets(@shift_1)
-    @enigma_1.downcase_message(@message_1)
-    expect(@enigma_1.encrypt(@message_1, @key_1, @date_1)).to eq({
-      encryption: "keder ohulw!",
+    allow(Date).to receive(:today).and_return(Date.new(2021,11,15))
+    expect(@enigma_1.encrypt(@message_1)).to eq({
+      encryption: "mifatdqdwpy!",
       key: "02715",
-      date: "040895"
+      date: "111521"
       })
   end
 

@@ -27,6 +27,11 @@ class Shift
     @key
   end
 
+  def use_today_date
+    today = Date.today
+    "#{today.month}#{today.mday}#{today.year.to_s[2,3]}"
+  end
+
   def slice_key(key)
     sliceable = key.clone
     key_hash_keys = [:A, :B, :C, :D]
