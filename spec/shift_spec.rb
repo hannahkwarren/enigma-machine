@@ -17,7 +17,11 @@ RSpec.describe Shift do
     expect(@shift.create_character_set).to eq(["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", " "])
   end
 
-  it 'generates a random number' do
+  it 'accepts an existing key value' do
+    @shift.accept_existing_key('01234')
+  end
+
+  it 'generates a random number for the key' do
     allow(SecureRandom).to receive(:random_number).with(10**5).and_return('01234'
     )
     expect(@shift.generate_random_number).to eq(@example_key1)
