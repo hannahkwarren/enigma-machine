@@ -47,9 +47,16 @@ RSpec.describe Enigma do
     expect(@enigma_1.downcase_message(@message_3)).to eq("absolute $*&#!")
   end
 
-  xit "#encrypt" do
-    expect(@enigma_1.encrypt(@string_1, @key_1, @date_1)).to eq({
-      encryption: "keder ohulw",
+  it "Encryptable#encrypt with key specified" do
+    allow(SecureRandom).to receive(:random_number).with(10**5).and_return('02715'
+    )
+    # @enigma_1.create_character_set(@shift_1)
+    @enigma_1.generate_key(@shift_1)
+    @enigma_1.date_last_four(@shift_1, @date_1)
+    @enigma_1.generate_offsets(@shift_1)
+    @enigma_1.downcase_message(@message_1)
+    expect(@enigma_1.encrypt(@message_1, @key_1, @date_1)).to eq({
+      encryption: "keder ohulw!",
       key: "02715",
       date: "040895"
       })
