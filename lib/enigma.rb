@@ -98,9 +98,7 @@ class Enigma
     self.generate_offsets(key, four_digits)
 
     text = _encrypt(@offsets, message, key, provided_date)
-    encrypted_text = {encryption: text,
-      key: key,
-      date: provided_date}
+    encrypted_text = {encryption: text, key: key, date: provided_date}
   end
 
   def decrypt(cyphertext, provided_key, provided_date = nil)
@@ -114,9 +112,7 @@ class Enigma
     self.generate_offsets(key, @four_digits)
 
     text = _decrypt(@offsets, cyphertext, key, provided_date)
-    decrypted_text = {decryption: text,
-                      key: key,
-                      date: provided_date}
+    decrypted_text = {decryption: text, key: key, date: provided_date}
   end
 
 end
