@@ -1,20 +1,16 @@
 require 'securerandom'
 require_relative './encryptable'
-# require_relative './decryptable'
+require_relative './decryptable'
 
 class Enigma
   include Encryptable
-  # include Decryptable
+  include Decryptable
 
   attr_reader :key, :four_digits, :offsets, :character_set
 
   def initialize
     @key = key
     @four_digits = four_digits
-    @character_set = character_set
-  end
-
-  def create_character_set
     @character_set = ("a".."z").to_a << " "
   end
 
@@ -60,11 +56,12 @@ class Enigma
   end
 
   def slice_date
+    sliceable = @four_digits.clone
     date_hash_keys = [:A, :B, :C, :D]
     sliced_date = Hash.new
 
     date_hash_keys.each do |symbol|
-      sliced_date[symbol] = four_digits.slice!(0)
+      sliced_date[symbol] = sliceable.slice!(0)
     end
     sliced_date.map {|k, v| [k, v.to_i]}.to_h
   end
@@ -87,7 +84,6 @@ class Enigma
       self.accept_key(provided_key)
     end
 
-    self.create_character_set
     message = downcase_message(message)
 
     if provided_key == nil
@@ -105,6 +101,22 @@ class Enigma
     encrypted_text = {encryption: text,
       key: key,
       date: provided_date}
+  end
+
+  def decrypt(cyphertext, provided_key, provided_date = nil)
+
+    if provided_date == nil
+      provided_date = self.use_today_date
+    end
+
+    self.date_last_four(provided_date)
+    self.accept_key(provided_key)
+    self.generate_offsets(key, @four_digits)
+
+    text = _decrypt(@offsets, cyphertext, key, provided_date)
+    decrypted_text = {decryption: text,
+                      key: key,
+                      date: provided_date}
   end
 
 end
