@@ -1,3 +1,4 @@
+require_relative './spec_helper'
 require 'date'
 require './lib/enigma'
 
@@ -13,6 +14,8 @@ RSpec.describe Enigma do
     @message_1 = "hello world!"
     @message_2 = "HEYYY! EVERYBODY"
     @message_3 = "Absolute $*&#!"
+
+    @enigma_2 = Enigma.new
   end
 
   it "exists" do
@@ -20,7 +23,6 @@ RSpec.describe Enigma do
   end
 
   it 'has attributes' do
-    @enigma_1.create_character_set
     expect(@enigma_1.character_set).to eq(["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", " "])
     expect(@enigma_1.key).to eq("02715")
   end
@@ -116,5 +118,26 @@ RSpec.describe Enigma do
       })
   end
 
-  
+  it "#decrypt given key and date" do
+    expect(@enigma_2.decrypt("keder ohulw", "02715", "040895")).to eq({decryption: "hello world",
+      key: "02715",
+      date: "040895"})
+  end
+
+  it "#decrypt given only key" do
+    allow(SecureRandom).to receive(:random_number).with(10**5).and_return('02715'
+    )
+    allow(Date).to receive(:today).and_return(Date.new(2021,11,15))
+
+    expect(@enigma_1.encrypt(@message_1)).to eq({
+      encryption: "mifatdqdwpy!",
+      key: "02715",
+      date: "111521"
+      })
+
+    expect(@enigma_2.decrypt("mifatdqdwpy!", "02715")).to eq({decryption: "hello world!",
+      key: "02715",
+      date: "111521"})
+  end
+
 end
