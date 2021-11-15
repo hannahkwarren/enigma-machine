@@ -1,6 +1,6 @@
 module Encryptable
 
-  def _encrypt(offsets, message, key, date)
+  def _encrypt(offsets, message, key)
 
     offset_keys = offsets.keys
 

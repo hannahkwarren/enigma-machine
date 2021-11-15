@@ -1,6 +1,6 @@
 module Decryptable
 
-  def _decrypt(offsets, cyphertext, key, date)
+  def _decrypt(offsets, cyphertext, key)
 
     offset_keys = offsets.keys
 
@@ -15,7 +15,7 @@ module Decryptable
         offset_index = offset_keys[offset_counter % offset_keys.length]
         # use offset_index to get the right offset value in offsets
         current_offset = offsets[offset_index]
-        
+
         offset_counter += 1
 
         new = character_set[(loc - current_offset) % character_set.length]
@@ -27,8 +27,5 @@ module Decryptable
     end
     decrypted_text
   end
-
-
-
 
 end
