@@ -98,8 +98,6 @@ RSpec.describe Enigma do
     expect(@enigma_1.use_today_date.length).to eq(6)
   end
 
-  
-
   it "#encrypt with no date specified" do
     allow(Date).to receive(:today).and_return(Date.new(2021,11,15))
     expect(@enigma_1.encrypt(@message_1, @key_1)).to eq({
@@ -119,7 +117,6 @@ RSpec.describe Enigma do
       date: "111521"
       })
   end
-
 
   it "#decrypt given key and date" do
     expect(@enigma_2.decrypt("keder ohulw", "02715", "040895")).to eq({decryption: "hello world",
@@ -143,14 +140,12 @@ RSpec.describe Enigma do
       date: "111521"})
   end
 
-  xit 'cracks the code given only date' do
-    expect(@enigma_2.encrypt("hello world end", "08304", "291018")).to eq({encryption: "vjqtbeaweqihssi", key: "08304", date: "291018"})
+  it 'cracks the code given only date' do
     expect(@enigma_2.crack("vjqtbeaweqihssi", "291018")).to eq({decryption: "hello world end", date: "291018", key: "08304"})
   end
 
   xit 'cracks the code given no additional info' do
     allow(Date).to receive(:today).and_return(Date.new(2021,11,15))
-    @enigma_2.encrypt("hello world end", "08304", "291018")
-    expect(@enigma_2.crack("vjqtbeaweqihssi")).to eq({decryption: "hello world end"})
+    expect(@enigma_2.crack("vjqtbeaweqihssi")[:decryption]).to eq("hello world end")
   end
 end
