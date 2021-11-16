@@ -140,4 +140,12 @@ RSpec.describe Enigma do
       date: "111521"})
   end
 
+  it 'cracks the code given only date' do
+    expect(@enigma_2.crack("vjqtbeaweqihssi", "291018")).to eq({decryption: "hello world end", date: "291018", key: "08304"})
+  end
+
+  it 'cracks the code given no additional info' do
+    allow(Date).to receive(:today).and_return(Date.new(2021,11,15))
+    expect(@enigma_2.crack("vjqtbeaweqihssi")[:decryption]).to eq("hello world end")
+  end
 end

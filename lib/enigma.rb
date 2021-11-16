@@ -97,7 +97,7 @@ class Enigma
     self.date_last_four(provided_date)
     self.generate_offsets(key, four_digits)
 
-    text = _encrypt(@offsets, message, key, provided_date)
+    text = _encrypt(@offsets, message, key)
     encrypted_text = {encryption: text, key: key, date: provided_date}
   end
 
@@ -111,8 +111,23 @@ class Enigma
     self.accept_key(provided_key)
     self.generate_offsets(key, @four_digits)
 
-    text = _decrypt(@offsets, cyphertext, key, provided_date)
+    text = _decrypt(@offsets, cyphertext, key)
     decrypted_text = {decryption: text, key: key, date: provided_date}
+  end
+
+  def crack(cyphertext, provided_date = nil)
+
+    if provided_date == nil
+      provided_date = self.use_today_date
+    end
+
+    (0..99999).each do |int|
+      possible_key = int.to_s.rjust(5, '0')
+      decrypted_text = self.decrypt(cyphertext, possible_key, provided_date)
+      if decrypted_text[:decryption][-4..-1] == " end"
+        return decrypted_text
+      end
+    end
   end
 
 end
