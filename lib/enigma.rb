@@ -115,7 +115,15 @@ class Enigma
     decrypted_text = {decryption: text, key: key, date: provided_date}
   end
 
-  def crack
+  def crack(cyphertext, provided_date = nil)
+
+    (0..99999).each do |int|
+      possible_key = int.to_s.rjust(5, '0')
+      decrypted_text = self.decrypt(cyphertext, possible_key, provided_date)
+      if decrypted_text[:decryption][-4..-1] == " end"
+        return decrypted_text
+      end
+    end
   end
 
 end
