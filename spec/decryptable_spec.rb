@@ -10,6 +10,7 @@ RSpec.describe Decryptable do
     enigma_1.generate_offsets("02715", "1025")
     expect(enigma_1.offsets).to eq({:A => 3, :B => 27, :C => 73, :D => 20})
     expect(enigma_1._decrypt(enigma_1.offsets, "keder ohulw", "02715")).to eq("hello world")
+    expect(enigma_1._decrypt(enigma_1.offsets, "kahia ladncljinbqg!!", "02715")).to eq('happy thanksgiving!!')
   end
 
 end
