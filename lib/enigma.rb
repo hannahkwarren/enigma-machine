@@ -20,7 +20,7 @@ class Enigma
   end
 
   def generate_key
-    # returns 5-digit random number between 00000 and 10**5,
+    # returns 5-digit random number between 00000 and 10**5, as a string,
     # padding first digits as needed with zeros via .rjust
     @key = SecureRandom.random_number(10**5).to_s.rjust(5, '0')
   end
@@ -50,7 +50,7 @@ class Enigma
       #slice off and return the first 2 characters of key
       sliced_key[symbol] = sliceable.slice!(0..1)
       #then put back the second character at the beginning of leftover
-      #  chars, so it can be included as first character for the next slice
+      #  string, so it can be included as first character for the next slice
       sliceable.prepend(sliced_key[symbol][1])
     end
     sliced_key.map {|k, v| [k, v.to_i]}.to_h
@@ -77,6 +77,7 @@ class Enigma
 
   def encrypt(message, provided_key = nil, provided_date = nil)
 
+    #if two args are provided, figure out if it's a key or a date, handle accordingly
     if provided_key.class == String && provided_key.length == 6
       provided_date = provided_key
       provided_key = nil
@@ -87,10 +88,12 @@ class Enigma
 
     message = downcase_message(message)
 
+    # if there's still no key (only one arg given), generate a key
     if provided_key == nil
       self.generate_key
     end
 
+    # if there's still no date, use today's date
     if provided_date == nil
       provided_date = self.use_today_date
     end
@@ -129,7 +132,7 @@ class Enigma
         return decrypted_text
       end
     end
-    
+
   end
 
 end
