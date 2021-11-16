@@ -1,4 +1,5 @@
 require 'securerandom'
+require 'date'
 require_relative './encryptable'
 require_relative './decryptable'
 
@@ -128,6 +129,7 @@ class Enigma
         return decrypted_text
       end
     end
+    
   end
 
 end

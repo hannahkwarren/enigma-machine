@@ -10,8 +10,8 @@ encrypted_file.close
 
 #find the decrypted message
 enigma = Enigma.new
-current_key = ARGV[2].dup
-current_date = ARGV[3].dup
+current_key = ARGV[2].dup.to_s
+current_date = ARGV[3].dup.to_s
 decrypted = enigma.decrypt(encrypted_hash[:encryption], current_key, current_date)
 
 #write encrypted message to encrypted.txt

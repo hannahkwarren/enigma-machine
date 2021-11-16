@@ -10,7 +10,7 @@ msg.close
 
 #find the encrypted message
 enigma = Enigma.new
-encrypted = enigma.encrypt(message, "02715", "040895")
+encrypted = enigma.encrypt(message)
 # clean = encrypted[:encryption].gsub(/[\\\"]/,"")
 # encrypted[:encryption] = clean
 
