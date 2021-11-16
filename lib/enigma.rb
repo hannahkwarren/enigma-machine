@@ -117,6 +117,10 @@ class Enigma
 
   def crack(cyphertext, provided_date = nil)
 
+    if provided_date == nil
+      provided_date = self.use_today_date
+    end
+
     (0..99999).each do |int|
       possible_key = int.to_s.rjust(5, '0')
       decrypted_text = self.decrypt(cyphertext, possible_key, provided_date)
