@@ -10,6 +10,38 @@ The project is inspired by Alan Turing and his work deciphering Nazi messages du
 
 Just like in Turing's real-life scenario, we are able to crack the code and decipher text using only a date because there is a known, consistent series of characters - in this case, " end" at the conclusion of each cypher text.
 
+## Written Using:
+Ruby v. 2.7.2
+
+## How To:
+
+First, clone this repo.
+
+From the enigma-machine directory, enter the following into your command line to encrypt a message.txt file using a random key and today's date; the encryption will be written to encrypted.txt:
+```
+ruby ./lib/encrypt.rb message.txt encrypted.txt
+```
+
+Optionally, you can specify the key and date as two additional arguments, in the encrypt.rb file, line 13 - for example:
+```
+encrypted = enigma.encrypt(message, "02715", "040895")
+```
+
+To decrypt, use this CLI command including the key; you can either include the date used to encrypt, or eliminate that last argument to automatically use today's date:
+```
+ruby ./lib/decrypt.rb encrypted.txt decrypted.txt 02715 040895
+```
+
+Finally, this command will "crack the code" and find the key. You can optionally provide the date used in the encryption, or eliminate that argument to crack using today's date:
+```
+ruby ./lib/crack.rb encrypted.txt cracked.txt 040895
+```
+
+> Please note! These assumptions are built in to the functionality: 
+
+1. The CLI commands are all run on the same date or provided the same date values.
+1. Cracking will only work if the message has " end" as the last four characters.
+
 ### Self-Evaluation
 
 Per the project requirements, here is a self-evaluation of my work on Enigma.
