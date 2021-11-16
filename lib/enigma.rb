@@ -125,6 +125,8 @@ class Enigma
       provided_date = self.use_today_date
     end
 
+    #check each possibility in the full range of possible 5-digit keys,
+    # returning the one that successfully returns " end" for last 4 characters
     (0..99999).each do |int|
       possible_key = int.to_s.rjust(5, '0')
       decrypted_text = self.decrypt(cyphertext, possible_key, provided_date)
